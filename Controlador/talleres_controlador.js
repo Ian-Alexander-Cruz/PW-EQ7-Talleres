@@ -11,3 +11,12 @@ async function listarTalleres(req, res){
     }
     
 }
+async function obtenerTaller(req, res) {
+    try{
+        const taller = await UsuariosModel.obtenerPorId(req.params.id);
+        if(!taller) return res.status(404).json({error : 'Taller no encontrado'});
+        res.json(taller);
+    } catch (error){
+        res.status(500).json({error: error.message});
+    }
+}
