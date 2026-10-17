@@ -10,3 +10,14 @@ async function registrarAsistencia(req, res) {
         res.status(500).json({ error: error.message });
     }
 }
+async function consultarAsistencias(req, res) {
+    try {
+        const tallerId = req.params.tallerId;
+        const asistencias = await AsistenciaModel.consultarAsistenciasPorTaller(tallerId);
+        res.json(asistencias);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+}
+
+module.exports = {registrarAsistencia,consultarAsistencias};
