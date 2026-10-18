@@ -14,5 +14,3 @@ const pool = mysql.createPool({
     database: "cecyt9_local",
     dateStrings: true
 })
-
-module.exports = pool
