@@ -1,4 +1,5 @@
 const pool = require("../bd-local")
+const COLUMNAS_TALLERES = "id, nombre, instructor, fecha, cupo, created_at"
 
 async function listar() {
     const [filas] = await pool.query(`SELECT ${COLUMNAS_TALLERES} FROM talleres ORDER BY fecha`)

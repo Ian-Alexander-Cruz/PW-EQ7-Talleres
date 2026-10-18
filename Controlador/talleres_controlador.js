@@ -6,7 +6,7 @@ async function listarTalleres(req, res){
     try{
         const talleres = await TalleresModel.listar();
         res.json(talleres);
-    } catch {
+    } catch (error) {
         res.status(500).json({error: error.message});
     }
     
@@ -28,4 +28,4 @@ async function registrarAlumno(req, res) {
         res.status(500).json({ error: error.message });
     }
 }
-module.exports(listarTalleres, obtenerTaller, registrarAlumno);
+module.exports = {listarTalleres, obtenerTaller, registrarAlumno};

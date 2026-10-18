@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs');
 
-const UsuariosModel = require('../Modelo/usuarios_modelo');
+const UsuariosModel = require('../Modelo/usuario_modelo');
 
 const {validarCorreo, validarBoleta, validarContrasena} = require('../validaciones');
 
@@ -12,7 +12,7 @@ async function listarUsuarios(req, res){
     try{
         const usuarios = await UsuariosModel.listar();
         res.json(usuarios);
-    } catch {
+    } catch (error) {
         res.status(500).json({error: error.message});
     }
     
@@ -22,11 +22,11 @@ async function obtenerUsuario(req, res) {
     try{
         const usuario = await UsuariosModel.obtenerPorId(req.params.id);
         if(!usuario) return res.status(404).json({error : 'Usuario no encontrado'});
-        res.json(usaurio);
+        res.json(usuario);
     } catch (error){
         res.status(500).json({error: error.message});
     }
 }
 
-
+module.exports = {listarUsuarios, obtenerUsuario}
 //deberan realizar los controladores de asistencia y talleres con sus funciones correspondientes
