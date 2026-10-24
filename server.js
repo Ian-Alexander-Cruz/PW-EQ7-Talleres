@@ -18,6 +18,7 @@ app.get("/", (req, res) => {
 
 app.get("/api/talleres", talleres.listarTalleres);
 app.get("/api/talleres/:id", talleres.obtenerTaller)
+app.post('/api/talleres', talleres.crearTaller);
 
 app.post("/eco", (req, res) => {
     const {texto} = req.body
