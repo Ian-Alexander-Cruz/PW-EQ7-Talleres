@@ -1,6 +1,7 @@
 const express = require("express")
 const talleres = require("./Controlador/talleres_controlador")
 const asistencias = require("./Controlador/asistencia_controlador")
+const usuarios = require("./Controlador/usuario_controlador")
 
 const app = express()
 
@@ -26,6 +27,12 @@ app.post('/api/talleres', talleres.crearTaller);
 app.get("/api/talleres/:id/asistencias", asistencias.listarAsistenciasDeTaller)
 app.post("/api/asistencias", asistencias.registrarAsistencia)
 
+//rutas para las consultas de usuarios
+app.get("/api/usuarios", usuarios.listarUsuarios)
+app.get("/api/usuarios/:id", usuarios.obtenerUsuario)
+app.post("/api/usuarios", usuarios.crearUsuario)
+app.put("/api/usuarios/:id", usuarios.actualizarUsuario)
+app.delete("/api/usuarios/:id", usuarios.eliminarUsuario)
 
 app.post("/eco", (req, res) => {
     const {texto} = req.body
