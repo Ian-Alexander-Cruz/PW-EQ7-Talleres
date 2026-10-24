@@ -1,5 +1,6 @@
 const express = require("express")
 const talleres = require("./Controlador/talleres_controlador")
+const asistencias = require("./Controlador/asistencia_controlador")
 
 const app = express()
 
@@ -16,9 +17,15 @@ app.get("/", (req, res) => {
     res.json({mensaje: "API de Registro de Asistencia - CECyT 9 funcionando correctamente"})
 })
 
+//rutas para las consultas de talleres
 app.get("/api/talleres", talleres.listarTalleres);
 app.get("/api/talleres/:id", talleres.obtenerTaller)
 app.post('/api/talleres', talleres.crearTaller);
+
+//rutas para las consultas de asistencias
+app.get("/api/talleres/:id/asistencias", asistencias.listarAsistenciasDeTaller)
+app.post("/api/asistencias", asistencias.registrarAsistencia)
+
 
 app.post("/eco", (req, res) => {
     const {texto} = req.body
