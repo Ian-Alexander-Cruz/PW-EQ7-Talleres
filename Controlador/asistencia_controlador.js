@@ -10,7 +10,7 @@ async function registrarAsistencia(req, res) {
         res.status(500).json({ error: error.message });
     }
 }
-async function consultarAsistencias(req, res) {
+async function listarAsistenciasDeTaller(req, res) {
     try {
         const tallerId = req.params.tallerId;
         const asistencias = await AsistenciaModel.consultarAsistenciasPorTaller(tallerId);
@@ -20,4 +20,4 @@ async function consultarAsistencias(req, res) {
     }
 }
 
-module.exports = {registrarAsistencia,consultarAsistencias};
+module.exports = {registrarAsistencia, listarAsistenciasDeTaller};
