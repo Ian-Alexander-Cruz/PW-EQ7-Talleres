@@ -24,4 +24,22 @@ async function registrarAlumnoTaller({tallerId, nombreAlumno, boleta}) {
     return filas[0]
 }
 
-module.exports = {listar, obtenerPorId, registrarAlumnoTaller}
+async function crear({nombre, instructor, fecha, cupo}) {
+    await pool.query(
+        `INSERT INTO talleres (id, nombre, instructor, fecha, cupo) 
+         VALUES (UUID(), ?, ?, ?, ?)`, 
+        [nombre, instructor, fecha, cupo]
+    );
+
+    const [filas] = await pool.query(
+        `SELECT id, nombre, instructor, fecha, cupo, created_at 
+         FROM talleres 
+         WHERE nombre = ? AND instructor = ? 
+         ORDER BY created_at DESC LIMIT 1`,
+        [nombre, instructor]
+    );
+    
+    return filas[0];
+}
+
+module.exports = {listar, obtenerPorId, crear}

@@ -28,4 +28,18 @@ async function registrarAlumno(req, res) {
         res.status(500).json({ error: error.message });
     }
 }
-module.exports = {listarTalleres, obtenerTaller, registrarAlumno};
+
+async function crearTaller(req, res) {
+    const {nombre, instructor, fecha, cupo} = req.body
+    if(!nombre || !fecha){
+        return res.status(400).json({error: "nombre y fecha son obligatorios"})
+    }
+    try{
+        const taller = await TalleresModel.crear({nombre, instructor, fecha, cupo})
+        res.status(201).json(taller)
+    }catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+}
+
+module.exports = {listarTalleres, obtenerTaller, registrarAlumno, crearTaller};
