@@ -11,6 +11,10 @@ app.get('/saludo', (req, res) => {
     res.json({mensaje: "Hola, esto es una prueba en GET"})
 })
 
+app.get("/", (req, res) => {
+    res.json({mensaje: "API de Registro de Asistencia - CECyT 9 funcionando correctamente"})
+})
+
 app.post("/eco", (req, res) => {
     const {texto} = req.body
     if(!texto){
