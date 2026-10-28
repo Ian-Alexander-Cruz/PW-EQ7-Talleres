@@ -4,11 +4,7 @@ const COLUMNAS_ASISTENCIAS = "id, taller_id, nombre_alumno, boleta, fecha_regist
 
 async function existeAsistencia({boleta}) {
   const [filas] = await pool.query(
-    `SELECT EXISTS(
-       SELECT 1 FROM asistencias a
-       JOIN usuarios u ON u.boleta = a.boleta
-       WHERE a.boleta = ?
-     ) AS existe`,
+    `SELECT EXISTS(SELECT 1 FROM asistencias WHERE boleta = ?) AS existe`,
     [boleta]
   )
   return filas[0].existe === 1
