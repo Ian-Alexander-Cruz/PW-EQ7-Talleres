@@ -52,7 +52,13 @@ export default function Perfil() {
     } finally {
       setCargando(false);
     }
+
+    async function registar() {
+      
+    }
   }
+
+  
 
   const nombre = alumno ? alumno.nombre : nombreInscrito;
 
@@ -120,6 +126,12 @@ export default function Perfil() {
           )}
         </>
       )}
+      <section className={estilos.panel}>
+        <h2>Registrate</h2>
+        <form>
+
+        </form>
+      </section>
     </main>
   );
 }
