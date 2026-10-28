@@ -9,8 +9,12 @@ async function registrarAsistencia(req, res) {
     }
 
     try{
-        if (await AsistenciaModel.existeAsistencia({ boleta })) {
-            return res.status(409).json({ error: 'El alumno ya estaba registrado en un taller o en otro taller' });
+        const lleno = await AsistenciaModel.tallerLleno(taller_id)
+        if (lleno === null) {
+            return res.status(404).json({ error: 'El taller no existe' })
+        }
+        if (lleno || await AsistenciaModel.tallerPasado(taller_id)) {
+            return res.status(409).json({ error: 'El taller ya pasó o está lleno' })
         }
 
         const asistencia = await AsistenciaModel.registrarAsistencia({ 
