@@ -2,6 +2,18 @@ const pool = require("../bd-local")
 
 const COLUMNAS_ASISTENCIAS = "id, taller_id, nombre_alumno, boleta, fecha_registro"
 
+async function existeAsistencia({boleta}) {
+  const [filas] = await pool.query(
+    `SELECT EXISTS(
+       SELECT 1 FROM asistencias a
+       JOIN usuarios u ON u.boleta = a.boleta
+       WHERE a.boleta = ?
+     ) AS existe`,
+    [boleta]
+  )
+  return filas[0].existe === 1
+}
+
 async function registrarAsistencia({tallerId, nombreAlumno, boleta}) {
   await pool.query(
     `INSERT INTO asistencias (taller_id, nombre_alumno, boleta) VALUES (?, ?, ?)`,
@@ -23,4 +35,4 @@ async function consultarAsistenciasPorTaller(tallerId) {
   return filas
 }
 
-module.exports = {registrarAsistencia, consultarAsistenciasPorTaller}
+module.exports = {registrarAsistencia, consultarAsistenciasPorTaller, existeAsistencia}
