@@ -53,10 +53,12 @@ export default function Perfil() {
       setCargando(false);
     }
 
-    async function registar() {
+    
+  }
+
+  async function registar() {
       
     }
-  }
 
   
 
