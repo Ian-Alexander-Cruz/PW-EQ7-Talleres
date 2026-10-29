@@ -16,4 +16,16 @@ function validarContrasena(contrasena){
     return contrasena.length >= 8
 }
 
-module.exports = {validarBoleta, validarContrasena, validarCorreo}
+function validarNombre(nombre) {
+    if (typeof nombre !== "string") return false;
+
+    nombre = nombre.trim();
+
+    if (nombre.length === 0 || nombre.length > 50) {
+        return false;
+    }
+
+    return /^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s]+$/.test(nombre);
+}
+
+module.exports = {validarBoleta, validarContrasena, validarCorreo, validarNombre}

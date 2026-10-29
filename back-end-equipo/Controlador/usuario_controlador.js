@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs');
 const UsuariosModel = require('../Modelo/usuario_modelo');
-const { validarCorreo, validarBoleta, validarContrasena } = require('../validaciones');
+const { validarCorreo, validarBoleta, validarContrasena, validarNombre } = require('../validaciones');
 
 function esDuplicado(error) {
     return error.code === 'ER_DUP_ENTRY' || error.code === '23505';
@@ -26,12 +26,14 @@ async function obtenerUsuario(req, res) {
 }
 
 async function crearUsuario(req, res) {
+    console.log("ENTRÉ A crearUsuario");
     const { nombre, correo, contrasena, boleta, rol } = req.body;
     if (!nombre || !correo || !contrasena || !boleta) {
         return res.status(400).json({ error: 'nombre, correo, contrasena y boleta son obligatorios' });
     }
     if (!validarCorreo(correo)) return res.status(400).json({ error: 'El correo no tiene un formato válido' });
-    if (!validarBoleta(boleta)) return res.status(400).json({ error: 'La boleta debe tener 10 dígitos' });
+    if (!validarBoleta(boleta)) return res.status(400).json({ error: 'La boleta debe tener 10 dígitos o debe contener solo numeros' });
+    if(!validarNombre(nombre)) return res.status(400).json({error: 'El nombre es muy largo, debe tener 1 a 50 caracteres'});
     if (!validarContrasena(contrasena)) {
         return res.status(400).json({ error: 'La contraseña debe tener al menos 8 caracteres' });
     }
