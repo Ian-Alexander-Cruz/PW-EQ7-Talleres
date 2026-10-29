@@ -3,6 +3,9 @@ import { useState } from 'react';
 import { pedirJSON } from '../lib/api';
 import { formatearFecha } from '../lib/formato';
 import { validarBoleta } from '../lib/validaciones';
+import { validarContrasena } from '../lib/validaciones';
+import { validarCorreo } from '../lib/validaciones';
+import { validarNombre } from '../lib/validaciones';
 import estilos from '../styles/Talleres.module.css';
 
 // /perfil — el alumno escribe su boleta y ve sus datos, sus talleres y los talleres con lugar.
@@ -53,12 +56,54 @@ export default function Perfil() {
       setCargando(false);
     }
 
-    
-  }
+    async function registar(e) {
+      e.preventDefault();
+    setErrorRegistro('');
+    setExitoRegistro('');
 
-  async function registar() {
-      
+    const nombreLimpio = regNombre.trim();
+    const correoLimpio = regCorreo.trim();
+    const contrasenaLimpia = regContrasena.trim();
+    const boletaLimpia = regBoleta.trim();
+
+    if (!validarNombre(nombreLimpio)) {
+      return setErrorRegistro('El nombre no es válido');
     }
+    if (!validarCorreo(correoLimpio)) {
+      return setErrorRegistro('El correo no es válido.');
+    }
+    if (!validarContrasena(contrasenaLimpia)) {
+      return setErrorRegistro('La contraseña debe tener al menos 8 caracteres.');
+    }
+    if (!validarBoleta(boletaLimpia)) {
+      return setErrorRegistro('La boleta debe tener exactamente 10 dígitos.');
+    }
+
+    setCargandoRegistro(true);
+    try {
+      await pedirJSON('/usuarios', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          nombre: nombreLimpio,
+          correo: correoLimpio,
+          contrasena: contrasenaLimpia,
+          boleta: boletaLimpia,
+        }),
+      });
+
+      setExitoRegistro('¡Registro exitoso!');
+      setRegNombre('');
+      setRegCorreo('');
+      setRegContrasena('');
+      setRegBoleta('');
+    } catch (err) {
+      setErrorRegistro(err.message);
+    } finally {
+      setCargandoRegistro(false);
+    }
+    }
+  }
 
   
 
