@@ -1,5 +1,3 @@
-const bcrypt = require('bcryptjs');
-
 const AsistenciaModel = require('../Modelo/asistencia_modelo');
 
 async function registrarAsistencia(req, res) {
@@ -13,8 +11,9 @@ async function registrarAsistencia(req, res) {
         if (lleno === null) {
             return res.status(404).json({ error: 'El taller no existe' })
         }
-        if (lleno || await AsistenciaModel.tallerPasado(taller_id)) {
-            return res.status(409).json({ error: 'El taller ya pasó o está lleno' })
+        if (lleno) return res.status(409).json({ error: 'El taller está lleno' })
+        if (await AsistenciaModel.tallerPasado(taller_id)) {
+            return res.status(409).json({ error: 'El taller ya pasó' })
         }
 
         if (await AsistenciaModel.existeAsistencia({ boleta })) {
