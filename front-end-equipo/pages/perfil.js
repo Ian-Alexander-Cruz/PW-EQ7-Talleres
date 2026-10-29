@@ -79,24 +79,12 @@ export default function Perfil() {
     } finally {
       setCargando(false);
     }
-
-    
   }
 
-<<<<<<< HEAD
   async function registrar(e) {
     e.preventDefault();
     setRegError('');
     setRegExito('');
-=======
-  async function registar() {
-      
-    }
-
-  
-
-  const nombre = alumno ? alumno.nombre : nombreInscrito;
->>>>>>> origin/dev2
 
     const nombreLimpio = regNombre.trim();
     const correoLimpio = regCorreo.trim();
@@ -231,7 +219,6 @@ export default function Perfil() {
           )}
         </>
       )}
-<<<<<<< HEAD
 
       <section className={estilos.panel}>
         <h2>Registrate</h2>
@@ -272,13 +259,6 @@ export default function Perfil() {
 
         {regError && <p className="error">{regError}</p>}
         {regExito && <p style={{ color: 'green' }}>{regExito}</p>}
-=======
-      <section className={estilos.panel}>
-        <h2>Registrate</h2>
-        <form>
-
-        </form>
->>>>>>> origin/dev2
       </section>
     </main>
   );
