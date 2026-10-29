@@ -52,6 +52,8 @@ export default function DetalleTaller() {
   const ocupados = asistencias.length;
   const libres = taller ? Math.max(0, taller.cupo - ocupados) : 0;
   const lleno = taller !== null && libres === 0;
+  const hoy = new Date().toLocaleDateString('en-CA'); 
+  const pasado = taller !== null && taller.fecha.slice(0, 10) < hoy;
 
 
   async function inscribir(e) {
@@ -69,6 +71,7 @@ export default function DetalleTaller() {
     }
     if(!validarNombre(nombreLimpio)) return setErrorForm("El nombre es muy largo");
     if (lleno) return setErrorForm('El taller ya no tiene lugares.');
+    if (pasado) return setErrorForm("La fecha de inscripcion ya pasó ")
 
     setEnviando(true);
     try {
@@ -126,8 +129,8 @@ export default function DetalleTaller() {
         <form onSubmit={inscribir} className="formulario">
           <input placeholder="Nombre completo" value={nombre} onChange={(e) => setNombre(e.target.value)} />
           <input placeholder="Boleta (10 dígitos)" value={boleta} onChange={(e) => setBoleta(e.target.value)} />
-          <button type="submit" disabled={lleno || enviando}>
-            {lleno ? 'Sin lugares' : enviando ? 'Inscribiendo…' : 'Inscribirme'}
+          <button type="submit" disabled={lleno || pasado || enviando}>
+              {pasado ? 'Registro terminado' : lleno ? 'Sin lugares' : enviando ? 'Inscribiendo…' : 'Inscribirme'}
           </button>
         </form>
         {errorForm && <p className="error">{errorForm}</p>}
