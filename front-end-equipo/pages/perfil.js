@@ -56,7 +56,7 @@ export default function Perfil() {
       setCargando(false);
     }
 
-    async function registar(e) {
+    async function registrar(e) {
       e.preventDefault();
     setErrorRegistro('');
     setExitoRegistro('');
