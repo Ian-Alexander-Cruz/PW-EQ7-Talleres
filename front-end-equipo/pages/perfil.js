@@ -19,6 +19,14 @@ export default function Perfil() {
   const [error, setError] = useState('');
   const [cargando, setCargando] = useState(false);
 
+  const [regNombre, setRegNombre] = useState('');
+  const [regCorreo, setRegCorreo] = useState('');
+  const [regContrasena, setRegContrasena] = useState('');
+  const [regBoleta, setRegBoleta] = useState('');
+  const [regError, setRegError] = useState('');
+  const [regExito, setRegExito] = useState('');
+  const [cargandoReg, setCargandoReg] = useState(false);
+
   async function buscar(e) {
     e.preventDefault();
     setError('');
@@ -130,9 +138,40 @@ export default function Perfil() {
       )}
       <section className={estilos.panel}>
         <h2>Registrate</h2>
-        <form>
+        <form onSubmit={registar} className='formulario'>
+          <input 
+            type='text'
+            placeholder='Nombre completo'
+            value={regNombre} 
+            onChange={(e) => setRegNombre(e.target.value)} 
+          />
+
+          <input
+          type="email"
+            placeholder="Correo electrónico (@alumno.ipn.mx)" 
+            value={regCorreo} 
+            onChange={(e) => setRegCorreo(e.target.value)} 
+          />
+
+          <input 
+            type='password'
+            placeholder='Contraseña'
+            value={regContrasena} 
+            onChange={(e) => setRegContrasena(e.target.value)} 
+          />
+
+          <input 
+            type='text'
+            placeholder='Boleta (10 dígitos)' 
+            value={regBoleta} 
+            onChange={(e) => setRegBoleta(e.target.value)} 
+          />
+
+          <button type='submit' disabled={cargandoReg}>{cargandoReg ? 'Registrando...' : 'Registrarse'}</button>
 
         </form>
+        {regError && <p className='error'>{regError}</p>}
+        {regExito && <p style={{color: 'green'}}>{regExito}</p>}
       </section>
     </main>
   );
