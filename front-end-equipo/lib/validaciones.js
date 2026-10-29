@@ -19,5 +19,5 @@ export function validarContrasena(contrasena) {
 
 export function validarNombre(nombre){
   if(typeof nombre !== "string") return false;
-  return /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{1,50}$/.test(nombre.trim())
+  return /^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s]{1,50}$/.test(nombre.trim())
 }
